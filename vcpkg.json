@@ -9,6 +9,7 @@
         "portmidi",
         "portaudio",
         "liblo",
+        "gtest",
         {
             "name": "dirent",
             "platform": "windows"
