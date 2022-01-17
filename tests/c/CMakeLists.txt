@@ -19,6 +19,8 @@ if(BUILD_TESTS)
         ${CMAKE_CURRENT_BINARY_DIR}/../../H
         ${CMAKE_SOURCE_DIR}/interfaces)
 
+    set(CMAKE_CXX_FLAGS "-fpermissive -Wwrite-strings -std=c++0x")
+
     if(USE_VCPKG)
         find_package(GTest CONFIG REQUIRED)
 
@@ -26,8 +28,6 @@ if(BUILD_TESTS)
             GTest::gtest_main ${CSOUNDLIB_STATIC})
     else ()
         find_package(GTest REQUIRED)
-
-        set(CMAKE_CXX_FLAGS "-fpermissive -Wwrite-strings -std=c++0x")
 
         target_include_directories(unittests PRIVATE
             ${GTEST_INCLUDE_DIRS})
