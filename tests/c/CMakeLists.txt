@@ -36,5 +36,6 @@ if(BUILD_TESTS)
             ${GTEST_BOTH_LIBRARIES} ${CSOUNDLIB_STATIC})
     endif()
 
-    add_test(NAME AllTests COMMAND unittests)
+    include(GoogleTest)
+    gtest_discover_tests(unittests)
 endif()
