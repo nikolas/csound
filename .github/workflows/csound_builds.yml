@@ -41,13 +41,15 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install cmake libasound2-dev libjack-dev libpulse-dev liblua5.1-0-dev default-jdk ladspa-sdk libpng-dev dssi-dev libgmm++-dev libcunit1-dev
+          sudo apt-get install cmake libasound2-dev libjack-dev libpulse-dev default-jdk ladspa-sdk dssi-dev
       - name: Configure Build
         run: cmake -B build -S . -DUSE_VCPKG=1 -DCUSTOM_CMAKE="./platform/linux/custom-linux.cmake"
       - name: Build Csound
         run: cmake --build build --config Release
       - name: Run Tests
-        run: cmake --build build --target test csdtests
+        run: |
+          cmake --build build --target csdtests
+          cd build && ctest
 
   macos_build:
     name: MacOS build
