@@ -1296,10 +1296,17 @@ if(BUILD_STATIC_LIBRARY)
     SET_TARGET_PROPERTIES(${CSOUNDLIB_STATIC} PROPERTIES PREFIX "lib")
     target_compile_options(${CSOUNDLIB_STATIC} PRIVATE ${libcsound_CFLAGS})
 
+    if(USE_VCPKG)
+        target_link_libraries(${CSOUNDLIB_STATIC} PRIVATE SndFile::sndfile)
+    else()
+        find_library(LIBSNDFILE_LIBRARY NAMES sndfile libsndfile-1 libsndfile)
+        target_link_libraries(${CSOUNDLIB_STATIC} PRIVATE LIBSNDFILE_LIBRARY)
+    endif()
+
     if(MSVC)
         target_link_libraries(${CSOUNDLIB_STATIC} PRIVATE ${CSOUND_WINDOWS_LIBRARIES})
     else()
-        target_link_libraries(${CSOUNDLIB_STATIC} ${libcsound_LIBS})
+        target_link_libraries(${CSOUNDLIB_STATIC} PRIVATE ${libcsound_LIBS})
     endif()
 
     set_target_properties(${CSOUNDLIB_STATIC} PROPERTIES
